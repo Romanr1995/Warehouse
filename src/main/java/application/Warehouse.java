@@ -1,8 +1,7 @@
 package application;
 
 public class Warehouse {
-    private static volatile int balanceProducts;
-
+    private volatile int balanceProducts;
 
     public Warehouse() {
         this.balanceProducts = 1000;
@@ -12,12 +11,14 @@ public class Warehouse {
         return balanceProducts <= 0;
     }
 
-    public static int getProductsCountWhenBuyiing(int countProducts) {
+    public int getProductsCountWhenBuyiing(int countProducts) {
         if (countProducts > balanceProducts) {
             countProducts = balanceProducts;
             balanceProducts = 0;
         } else {
-            balanceProducts -= countProducts;
+            synchronized (this) {
+                balanceProducts -= countProducts;
+            }
         }
         return countProducts;
     }

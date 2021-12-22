@@ -23,7 +23,7 @@ public class Buyer extends Thread {
         while (!warehouse.isEmpty()) {
             try {
                 cyclicBarrier.await();
-                int productsCountWhenBuyiing = Warehouse.getProductsCountWhenBuyiing(1 +
+                int productsCountWhenBuyiing = warehouse.getProductsCountWhenBuyiing(1 +
                         (int) (Math.random() * 10));
                 if (productsCountWhenBuyiing > 0) {
                     countBuys++;
