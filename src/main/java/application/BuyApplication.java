@@ -16,13 +16,7 @@ public class BuyApplication {
                 buyers.add(buyer);
                 buyer.start();
             }
-            for (Buyer buyer : buyers) {
-                try {
-                    buyer.join();
-                } catch (InterruptedException e) {
-                    System.out.println("Поток " + buyer.getName() + " остановлен.");
-                }
-            }
+
             for (Buyer buyer : buyers) {
                 System.out.println(buyer);
             }

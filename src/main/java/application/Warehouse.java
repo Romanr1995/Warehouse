@@ -16,7 +16,7 @@ public class Warehouse {
             countProducts = balanceProducts;
             balanceProducts = 0;
         } else {
-            synchronized (this) {
+            {
                 balanceProducts -= countProducts;
             }
         }
