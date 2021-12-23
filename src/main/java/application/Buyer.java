@@ -18,16 +18,21 @@ public class Buyer extends Thread {
         this.cyclicBarrier = cyclicBarrier;
     }
 
+    public int getCountProducts() {
+        return countProducts;
+    }
+
     @Override
-    public synchronized void run() {
+    public void run() {
+
         while (!warehouse.isEmpty()) {
             try {
                 cyclicBarrier.await();
-                int productsCountWhenBuyiing = warehouse.getProductsCountWhenBuyiing(1 +
+                int productsCountWhenBuying = warehouse.getProductsCountWhenBuyiing(1 +
                         (int) (Math.random() * 10));
-                if (productsCountWhenBuyiing > 0) {
+                if (productsCountWhenBuying > 0) {
                     countBuys++;
-                    countProducts += productsCountWhenBuyiing;
+                    countProducts += productsCountWhenBuying;
                 }
                 cyclicBarrier.await();
             } catch (BrokenBarrierException | InterruptedException e) {

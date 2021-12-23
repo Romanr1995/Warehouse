@@ -1,7 +1,7 @@
 package application;
 
 public class Warehouse {
-    private volatile int balanceProducts;
+    private int balanceProducts;
 
     public Warehouse() {
         this.balanceProducts = 1000;
@@ -11,13 +11,14 @@ public class Warehouse {
         return balanceProducts <= 0;
     }
 
-    public int getProductsCountWhenBuyiing(int countProducts) {
+    public synchronized int getProductsCountWhenBuyiing(int countProducts) throws InterruptedException {
         if (countProducts > balanceProducts) {
             countProducts = balanceProducts;
             balanceProducts = 0;
         } else {
             {
-                balanceProducts -= countProducts;
+                    balanceProducts -= countProducts;
+                    Thread.sleep(10);
             }
         }
         return countProducts;
