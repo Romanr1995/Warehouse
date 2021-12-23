@@ -7,7 +7,7 @@ public class Buyer extends Thread {
 
     private int countProducts;
     private int countBuys;
-    private static int numberBuyer = 0;
+    private static int numberBuyer;
     private String name = "Buyer";
     private Warehouse warehouse;
     private CyclicBarrier cyclicBarrier;
@@ -16,10 +16,6 @@ public class Buyer extends Thread {
         this.name += ++numberBuyer;
         this.warehouse = warehouse;
         this.cyclicBarrier = cyclicBarrier;
-    }
-
-    public int getCountProducts() {
-        return countProducts;
     }
 
     @Override
@@ -39,6 +35,7 @@ public class Buyer extends Thread {
                 System.out.println("Поток " + name + "остановлен.");
             }
         }
+        System.out.println(this);
     }
 
     @Override

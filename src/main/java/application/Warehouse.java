@@ -18,7 +18,6 @@ public class Warehouse {
         } else {
             {
                     balanceProducts -= countProducts;
-                    Thread.sleep(10);
             }
         }
         return countProducts;

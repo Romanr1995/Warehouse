@@ -17,16 +17,6 @@ public class BuyApplication {
                 buyer.start();
             }
 
-            for (Buyer buyer : buyers) {
-                buyer.join();
-            }
-
-            int products = 0;
-            for (Buyer buyer : buyers) {
-                System.out.println(buyer);
-                products+=buyer.getCountProducts();
-            }
-            System.out.println("Количество товара,купленное всеми покупателями = " + products);
         } else {
             System.out.println("Ошибка!Должно быть задано 1 аргумент.А задано: " + args.length);
         }
