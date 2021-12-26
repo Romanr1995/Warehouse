@@ -1,7 +1,6 @@
 package application;
 
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.Phaser;
 
 public class Buyer extends Thread {
 
@@ -10,12 +9,13 @@ public class Buyer extends Thread {
     private static int numberBuyer;
     private String name = "Buyer";
     private Warehouse warehouse;
-    private CyclicBarrier cyclicBarrier;
+    private Phaser phaser;
 
-    public Buyer(Warehouse warehouse, CyclicBarrier cyclicBarrier) {
+    public Buyer(Warehouse warehouse, Phaser phaser) {
         this.name += ++numberBuyer;
         this.warehouse = warehouse;
-        this.cyclicBarrier = cyclicBarrier;
+        this.phaser = phaser;
+        this.phaser.register();
     }
 
     @Override
@@ -23,19 +23,20 @@ public class Buyer extends Thread {
 
         while (!warehouse.isEmpty()) {
             try {
-                cyclicBarrier.await();
+                phaser.arriveAndAwaitAdvance();
                 int productsCountWhenBuying = warehouse.getProductsCountWhenBuyiing(1 +
                         (int) (Math.random() * 10));
                 if (productsCountWhenBuying > 0) {
                     countBuys++;
                     countProducts += productsCountWhenBuying;
                 }
-                cyclicBarrier.await();
-            } catch (BrokenBarrierException | InterruptedException e) {
+
+            } catch (InterruptedException e) {
                 System.out.println("Поток " + name + "остановлен.");
             }
         }
         System.out.println(this);
+        phaser.arriveAndDeregister();
     }
 
     @Override
